@@ -1,0 +1,166 @@
+@charset "UTF-8";
+
+body {
+	font-family: 'Roboto Mono', monospace;
+	font-weight: normal;
+	font-size: 16px;
+	color: #000000;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 1300px;
+	background-image: url("/resources/images/stripes-light.png");
+}
+
+input {
+	height: 20px;
+	border: 1px solid gray;
+	border-radius: 2px;
+}
+
+form {
+	font-family: 'Roboto Mono', monospace;
+	font-weight: normal;
+	font-size: 14px;
+}
+
+h2 {
+	text-align: center;
+	color: #008080;
+	font-weight: bold;
+	font-family: 'Roboto Mono', monospace;
+}
+
+a {
+	font-size: 14px;
+	font-family: 'Roboto Mono', monospace;
+	font-weight: bold;
+	color: #000000;
+	text-decoration: none;
+}
+
+.userTableRow td a {
+	font-weight: normal;
+}
+
+.userTableRow td a:hover {
+	font-size: 14px;
+}
+
+a:hover {
+	font-size: 15px;
+	font-family: 'Roboto Mono', monospace;
+	font-weight: bold;
+	color: #0080c0;
+	text-decoration: none;
+}
+
+.formbutton {
+	background-color: white;
+	border: 1px solid black;
+	color: #222222;
+	padding: 10px 10px;
+	text-decoration: none;
+	margin: 4px 2px;
+	cursor: pointer;
+	border-radius: 2px;
+	font-size: 14px;
+	font-weight: bold;
+	width: 160px;
+	height: 40px;
+	border-radius: 6px;
+}
+
+.formbutton:hover {
+	border: 2px solid red;
+}
+
+.tableMenuBg {
+	height: 58px;
+	border-radius: 6px;
+	margin-bottom: 5px;
+}
+
+.tableUsers {
+	margin-bottom: 8px;
+	margin-top: 3px;
+}
+
+.menuTableRow {
+	font-weight: bold;
+	background-color: #ccffcc;
+}
+
+.tableUsers tr td {
+	border: 1px solid black;
+}
+
+.userTableRow {
+	background-color: #FFEAE9;
+	height: 26px;
+}
+
+input[type="button"]:disabled {
+	border: 1px solid lightgrey;
+	cursor: default;
+	background-color: #cfc4c1;
+	color: #a4a2a1;
+}
+
+.howManyPages {
+	text-align: center;
+	font-weight: bold;
+}
+
+.useredit {
+	width: 263px;
+	height: 28px;
+	border-radius: 4px;
+	font-family: 'Roboto Mono', monospace;
+	padding-left: 5px;
+}
+
+.profiledit {
+	width: 250px;
+	height: 24px;
+	border-radius: 4px;
+	font-family: 'Roboto Mono', monospace;
+	padding-left: 10px;
+}
+
+.userstable {
+	width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.searcharea {
+	height: 54px;
+}
+
+#searchText {
+	height: 40px;
+	margin-right: 20px;
+	border-radius: 6px;
+	padding-left: 10px;
+	width: 250px;
+	border: 1px solid;
+	background-color: white;
+}
+
+#chooseFile {
+	background-color: white;
+	height: 38px;
+	border-radius: 6px;
+	padding-left: 8px;
+	width: 250px;
+	border: 1px solid;
+}
+
+.dontEditAdmin {
+	text-align: center;
+	color: red;
+	padding-top: 10px;
+	font-weight: bold;
+}

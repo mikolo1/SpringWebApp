@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">		<!-- pierwszy appender, standardowe wyjście na konsolę, klasa ze springa, nie trzeba jej ręcznie dołączać, wyłapuje logi z aplikacji i wyświetla na konsoli -->
+		<encoder>	
+			<pattern>	<!-- ustalamy wzorzec, wg którego będą formatowane logi wysyłane przez aplikację -->
+				[%d{yyyy-MM-dd' 'HH:mm:ss}]	[%C] [%t] [%L] [%p] %m%n	<!-- liczba - data, godzina, w nawiasie klamrowym, bo to parametr, przychodzi z kontenera, [%C]-info, z jakiej klasy,[%t]- wątku pochodzi log,[L]- linia kodu, [%-5p] - rodzaj loga, %m%n - message z loga i przejście do nowej linii -->
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">		<!-- drugi appender, zapis logów do pliku -->
+		<encoder>	
+			<pattern>	<!-- ustalamy wzorzec, wg którego będą formatowane logi wysyłane przez aplikację -->
+				[%d{yyyy-MM-dd' 'HH:mm:ss' '}]	[%C] [%t] [%L] [%p] %m%n	<!-- jak wyżej -->
+			</pattern>
+		</encoder>
+		
+		<file>
+			.logs/usersapp.log	<!-- katalog z kropką z przodu nie zostanie uwzględniony podczas budowania aplikacji (jar lub war)-->
+		</file>
+		
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">		<!-- definicja, co sie ma dziać z plikiem logu po osiągnięciu rozmiaru -->
+			<fileNamePattern>	<!-- definicja archiwum dla logów-->
+				.logs/archived/usersapp_%d{yyyy-MM-dd}_%i.log	<!-- ścieżka do archiwum - data, %i - kolejny nr logu  -->
+			</fileNamePattern>	
+			
+			<maxFileSize>	<!-- definicja max rozmiaru pliku, po jego przekroczeniu ląduje w archiwum i tworzony jest nowy plik -->
+				2MB
+			</maxFileSize>
+			
+			<maxHistory>	<!-- max ilość przechowywanych w archiwum plików -->
+				10
+			</maxHistory>
+			
+			<totalSizeCap>	<!-- max ilość pamięci przeznaczonych na logi, tu 25 MB-->
+				25MB
+			</totalSizeCap>
+			
+		</rollingPolicy>	
+			
+	</appender>
+	
+	<!-- definicja, z jakiego poziomu logi mają się zapisywać -->
+	<root level="INFO">	<!-- pień logów, domyślnie wszystkie logi generowanę będą wszystkie do poziomu INFO -->
+		<appender-ref ref="STDOUT"/>	<!-- wskazanie tego poziomu dla logów konsoli -->
+		<appender-ref ref="FILE"/>		<!-- i to samo dla pliku -->
+	</root>
+	
+	<!-- filtrowanie logów, które konkretnie logi z określonych wyżej poziomów mają się zapisywać  -->
+	<!-- nazwy jak w pliku application.properties, bez początku -->
+	<logger name="org.hibernate" additivity="false" level="INFO">
+		<appender-ref ref="FILE"/>	<!-- te logi mają trafic do pliku -->
+	</logger>
+	
+	<logger name="org.springframework.web" additivity="false" level="INFO">
+		<appender-ref ref="FILE"/>	<!-- te logi od razu mają trafic do pliku -->
+	</logger>
+	
+	<!-- poziom DEBUG generuje najwięcej danych -->
+	<logger name="mikolo.springWebApp" additivity="false" level="DEBUG">
+		<appender-ref ref="FILE"/>	<!-- te logi od razu mają trafic do pliku -->
+	</logger>
+	
+</configuration>
