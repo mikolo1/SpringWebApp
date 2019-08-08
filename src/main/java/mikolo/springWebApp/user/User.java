@@ -64,4 +64,7 @@ public class User {
 	@Transient
 	private String newEmail;
 	
+	@Column(name = "email_activation_code")
+	private String emailActivationCode;
+	
 }

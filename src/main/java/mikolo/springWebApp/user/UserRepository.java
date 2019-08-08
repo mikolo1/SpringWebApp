@@ -19,4 +19,11 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	@Query(value="UPDATE users SET email = :newEmail , name = :newName , last_name = :newLastName WHERE user_id = :id", nativeQuery = true)
 	public void updateUser(@Param("newEmail") String newEmail, @Param("newName") String newName, @Param("newLastName") String newLastName, @Param("id") long id);
 	
+	@Modifying
+	@Query(value = "UPDATE users SET active = :active WHERE email_activation_code = :activationCode", nativeQuery = true)
+	public void updateUserActivity(@Param("active") int active, @Param("activationCode") String activationCode);
+
+	@Query(value="SELECT * from users WHERE email_activation_code = :activationCode LIMIT 1", nativeQuery = true)
+	public User findUserByActivationCode(@Param("activationCode") String activationcode);
+	
 }
