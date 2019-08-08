@@ -30,23 +30,18 @@ public class UserUtilities {
 	private UserService userService;
 
 	public static String loggedUser() {
-		String loggedUser = "";
+
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (!(auth instanceof AnonymousAuthenticationToken)) {
-			loggedUser = auth.getName();
-		}
-		return loggedUser;
+		return !(auth instanceof AnonymousAuthenticationToken) ? auth.getName() : "";
 	}
 
 	public static int getNrRoli(User user) {
 		return user.getRoles().iterator().next().getId();
-		// return user.getRoles().stream().mapToInt(Role::getId).findFirst().getAsInt();
 	}
 
 	public User getUserByUserName() {
 		String userName = loggedUser();
-		User user = userService.findByEmail(userName);
-		return user;
+		return userService.findByEmail(userName);
 	}
 
 	public static List<User> usersDataLoader(File file) {
