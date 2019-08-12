@@ -7,7 +7,7 @@
 			<td align = "center" width="12%">
 				<!-- <a href="/admin/upload"><s:message code = "button.upload"/></a> -->
 			</td>
-		<sf:form id = "uploadForm" action="${pageContext.request.contextPath}/admin/usersload" method="POST" modelAttribute="fileupload" enctype="multipart/form-data">
+		<sf:form id = "uploadForm" action="${pageContext.request.contextPath}/admin/usersload" method="POST" enctype="multipart/form-data">
 			
 			<td align = "right" width="40%">
 				<s:message code = "admin.xmlLoad.info"/>				
