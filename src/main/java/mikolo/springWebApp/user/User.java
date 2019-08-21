@@ -39,7 +39,7 @@ public class User {
 
 	@NotNull
 	@Column(name = "last_name")
-	private String LastName;
+	private String lastName;
 
 	@NotNull
 	private int active;

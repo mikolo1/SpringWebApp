@@ -16,6 +16,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +27,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.gson.GsonBuilder;
 
 import lombok.AllArgsConstructor;
 import mikolo.springWebApp.user.User;
@@ -41,6 +47,7 @@ public class AdminPageController {
 	private MessageSource messageSource;
 	private UserUtilities userUtilities;
 	private AdminService adminService;
+	private RestTemplate restTemplate;
 
 	@GetMapping(value = "")
 	public String showAdminPage(Model model) {
@@ -109,7 +116,7 @@ public class AdminPageController {
 		return "redirect:/admin/users/1";
 	}
 		
-	@PostMapping(value="/usersload")
+	@PostMapping(value="/usersload", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String importXMLUsers(@RequestParam("filename") MultipartFile mFile, Model model, Locale locale) {
 		String uploadDir = System.getProperty("user.dir") + "/uploads";
 		File file;
@@ -124,8 +131,17 @@ public class AdminPageController {
 			Files.write(fileAndPath, mFile.getBytes());	//zapisuję plik na dysku
 			file = fileAndPath.toFile(); //pobieram go jako plik do przekazania do metody parsującej z xml
 			
-			List<User>userList = UserUtilities.usersDataLoader(file);
-			adminService.insertInBatch(userList);
+			List<User>userList = UserUtilities.usersDataLoader(file);			
+//			adminService.insertInBatch(userList);
+//			restTemplate.postForObject("http://localhost:8300/service/users/adduserslist1", userList, String.class); //to wystarczy
+			
+			String jsonUserList = new GsonBuilder().setPrettyPrinting().create().toJson(userList);
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+			
+			@SuppressWarnings({ "rawtypes", "unchecked" })
+			HttpEntity request = new HttpEntity(jsonUserList, headers);
+			restTemplate.postForObject("http://localhost:8300/service/users/adduserslist", request, String.class);
 			file.delete();
 			
 			if(userList.size() > 0) {

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.unit.DataSize;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class WebMvcConfig {//implements WebMvcConfigurer{
@@ -23,6 +24,11 @@ public class WebMvcConfig {//implements WebMvcConfigurer{
 		mFactory.setMaxFileSize(maxFileSize);
 		mFactory.setMaxRequestSize(maxFileSize);
 		return mFactory.createMultipartConfig();
+	}
+	
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
 	}
 	
 }
